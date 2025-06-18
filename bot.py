@@ -1,7 +1,5 @@
 import logging
 import os
-from telegram import Path
-import pathlib
 from telegram import Update, __version__ as TG_VER
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
 from PIL import Image
@@ -19,7 +17,7 @@ logger = logging.getLogger(__name__)
 THUMBNAIL_PATH = 'thumbnail.jpg'
 
 # כתובת בסיס ל-Webhook
-BASE_URL = os.getenv('BASE_URL')
+BASE_URL = os.getenv('BASE_URL', 'https://groky.onrender.com')
 
 # רישום גרסת python-telegram-bot
 logger.info(f"Using python-telegram-bot version {TG_VER}")
@@ -33,7 +31,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     )
 
 # פקודת /help
-async def help_command(update: ContextTypes, context: Update.DEFAULT_TYPE) -> None:
+async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await update.message.reply_text(
         'הנה מה שאני עושה:\n'
         '1. שלח לי כל קובץ.\n'
@@ -43,7 +41,7 @@ async def help_command(update: ContextTypes, context: Update.DEFAULT_TYPE) -> No
     )
 
 # הכנת thumbnail
-async def prepare_thumbnail() -> io.PathIO:
+async def prepare_thumbnail() -> io.BytesIO:
     try:
         with Image.open(THUMBNAIL_PATH) as img:
             img = img.convert('RGB')
@@ -73,7 +71,7 @@ async def handle_file(update: Update, context: ContextTypes.DEFAULT_TYPE) -> Non
         if not thumb_io:
             error_message = 'לא הצלחתי להוסיף תמונה, אבל הנה הקובץ שלך.'
 
-        # הוספת "OldTown" לפני הסיומת
+        # הוספת "_OldTown" לפני הסיומת
         original_filename = document.file_name
         base, ext = os.path.splitext(original_filename)
         new_filename = f"{base}_OldTown{ext}"
