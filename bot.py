@@ -25,8 +25,8 @@ logger.info(f"Using python-telegram-bot version {TG_VER}")
 # פקודת /start
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await update.message.reply_text(
-        'שלום! אני בוט שמוסיף תמונת thumbnail לקבצים בטלגרם.\n'
-        'שלח לי כל קובץ, ואני אשלח אותו בחזרה עם תמונה.\n'
+        'היי! אני גרוקי. לא מכיר? לא נורא...\n'
+        'שלח לי קובץ, ותקבל אותו עם התמונה\n'
         'צריך עזרה? הקלד /help.'
     )
 
@@ -35,9 +35,9 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
     await update.message.reply_text(
         'הנה מה שאני עושה:\n'
         '1. שלח לי כל קובץ.\n'
-        '2. אני אוסיף לו תמונת thumbnail בטלגרם, אם אפשר.\n'
+        '2. אני אוסיף לו את התמונה של אולדטאון בטלגרם.\n'
         '3. תקבל את הקובץ בחזרה.\n'
-        'יש שאלות? שלח הודעה.'
+        'יש שאלות? תתאפק.'
     )
 
 # הכנת thumbnail
@@ -83,7 +83,7 @@ async def handle_file(update: Update, context: ContextTypes.DEFAULT_TYPE) -> Non
                 document=f,
                 filename=new_filename,
                 thumbnail=thumb_io if thumb_io else None,
-                caption=error_message or 'הנה הקובץ עם תמונה בטלגרם!'
+                caption=error_message or 'ספריית אולדטאון - https://t.me/OldTownew'
             )
 
         # ניקוי קבצים זמניים
